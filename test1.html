@@ -1,0 +1,137 @@
+<title>投網をしよう</title>
+
+<div class="d-problem-content__background-bottom">
+<h2 class="d-problem-content__problem-title code4">
+<span class="d-problem-content__problem-title-background">B119:投網</span>
+</h2>
+<div class="inr1">
+  <p class="mb15">海洋学者であるあなたは、フィールドワークのために海にやってきました。<br>
+あなたの仕事は、研究のためにできるだけ多くの魚を捕まえることです。<br>
+<br>
+魚の捕獲にはレーダーと網を用います。<br>
+レーダーを用いると、1m 四方を 1 マスとした H x W マスで表される海域において、各マスにどれだけの魚がいるかを知ることができます。網で捕獲するまで、魚はグリッドの境界をまたぐことはありません。<br>
+
+</p><p><img alt="図1" src="http://paiza.s3.amazonaws.com/problem/img/580/img1.png"></p>
+
+網の形状は 1m 四方を 1 マスとした R × C マスのグリッドで表され、海のグリッドの線分が縦横ともに重なるような位置に網を投げ入れることで、網と重なったマスにいるすべての魚を捕獲することができます。<br>
+
+<p><img alt="図2" src="http://paiza.s3.amazonaws.com/problem/img/580/img2.png"></p>
+
+網を 1 回投げ入れることで、最大で何匹の魚を捕まえることができるかを求めるプログラムを書いてください。<br>
+なお、網は入力で与えられた向きで投げ入れるものとし、回転・反転して用いることはできません。また、レーダーで調べられる H × W マスの海域の外に重なるように網を投げ入れることはできません。<br>
+<br>
+上記の例では、網の座標 (1, 1) が海域の座標 (2, 2) に来るように網を投げ入れることで、6 匹の魚を捕まえることができ、これが捕まえられる魚の数の最大値になります。<br>
+
+<p><img alt="図3" src="http://paiza.s3.amazonaws.com/problem/img/580/img3.png"></p>
+
+
+<p></p>
+</div>
+<div class="inr2">
+  <div class="box2">
+    <dl class="txt1">
+    <dt class="icon1">評価ポイント</dt>
+    <dd>
+    10回のテストケースで、正答率、実行速度、メモリ消費量をはかり得点が決まります。<br>
+    より早い解答時間で提出したほうが得点が高くなります。
+    <ol>
+    <li>複数のテストケースで正しい出力がされるか評価（+50点）</li>
+    <li>解答までの速さ評価（+50点）</li>
+    </ol>
+    </dd>
+    </dl>
+  </div>
+  <div class="box3">
+    <dl class="txt1">
+    <dt class="icon2">入力される値</dt>
+    <dd>
+      <p>入力は以下のフォーマットで与えられます。</p>
+<pre><code>H W
+s_{1,1} s_{1,2} ... s_{1,W}
+s_{2,1} s_{2,2} ... s_{2,W}
+...
+s_{H,1} s_{H,2} ... s_{H,W}
+R C
+n_1
+n_2
+...
+n_R</code></pre>
+<ul>
+<li>・1 行目には、海域を表すグリッドの縦幅と横幅を表す整数 H, W がこの順で半角スペース区切りで与えられます。</li>
+<li>・続く H 行のうちの i 行目 (1 ≦ i ≦ H) には、W 個の整数が半角スペース区切りで与えられます。i 行目の j 番目 (1 ≦ j ≦ W) の整数 s_{i, j} は、海域の i 行 j 列目のグリッドにいる魚の匹数を表します。</li>
+<li>・H + 2 行目には、網の形状を表すグリッドの縦幅と横幅を表す整数 R, C がこの順で半角スペース区切りで与えられます。</li>
+<li>・続く R 行のうちの i 行目 (1 ≦ i ≦ R) には、長さ W の文字列 n_i が与えられます。n_i は '#' または '.' からなり、j 番目 (1 ≦ j ≦ C) の文字が '#' のとき、そのマスに網が存在することを、'.' のとき存在しないことを表します。</li>
+<li>・入力は合計で H + R + 2 行となり、入力値最終行の末尾に改行が 1 つ入ります。</li></ul>
+<br>
+             それぞれの値は文字列で標準入力から渡されます。<a class="targetBlank" href="/guide/samplecode.html" target="_blank">標準入力からの値取得方法はこちらをご確認ください</a><br>
+    </dd>
+    </dl>
+  </div>
+
+  <div class="box3">
+    <dl class="txt1">
+      <dt class="icon3">期待する出力</dt>
+    <dd>
+<p>網を 1 回投げ入れることによって捕まえることのできる魚の数の最大値を 1 行に出力してください。<br>
+末尾に改行を入れ、余計な文字、空行を含んではいけません。
+</p>
+    </dd>
+    </dl>
+  </div>
+  <div class="box3">
+    <dl class="txt1">
+    <dt class="icon4">条件</dt>
+    <dd>
+        <p>すべてのテストケースにおいて、以下の条件をみたします。</p>
+<ul>
+<li>・1 ≦ H, W ≦ 50</li>
+<li>・1 ≦ R ≦ H</li>
+<li>・1 ≦ C ≦ W</li>
+<li>・0 ≦ s_{i, j} ≦ 100 (1 ≦ i ≦ H, 1 ≦ j ≦ W)</li>
+<li>・n_i (1 ≦ i ≦ R) は長さ C の '#' または '.' からなる文字列</li>
+<li>・n_i (1 ≦ i ≦ R) は無駄な余白を含まない。すなわち、次が成り立つ。</li>
+<li>　・n_1 のうち少なくとも 1 つは '#'</li>
+<li>　・n_R のうち少なくとも 1 つは '#'</li>
+<li>　・n_i (1 ≦ i ≦ R) の 1 文字目のうち少なくとも 1 つは '#'</li>
+<li>　・n_i (1 ≦ i ≦ R) の C 文字目のうち少なくとも 1 つは '#'</li>
+</ul>
+
+</dd>
+    </dl>
+  </div>
+
+</div>
+
+<div class="sample-container">
+<div class="sample-content"><div class="sample-content__title">入力例1</div><pre class="sample-content__input"><code>4 5
+2 0 0 0 1
+0 2 0 0 0
+0 1 0 3 0
+0 0 1 0 0
+2 3
+##.
+#.#
+</code></pre></div><div class="sample-content"><div class="sample-content__title">出力例1</div><pre class="sample-content__input"><code>6
+</code></pre></div>
+<div class="sample-content"><div class="sample-content__title">入力例2</div><pre class="sample-content__input"><code>7 7
+1 0 1 0 1 0 1
+0 2 0 2 0 2 0
+1 0 3 0 3 0 1
+0 2 0 4 0 2 0
+1 0 3 0 3 0 1
+0 2 0 2 0 2 0
+1 0 1 0 1 0 1
+5 5
+..#..
+.###.
+#####
+.###.
+..#..
+</code></pre></div><div class="sample-content"><div class="sample-content__title">出力例2</div><pre class="sample-content__input"><code>24
+</code></pre></div>
+
+
+
+
+</div>
+</div>
