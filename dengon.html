@@ -1,0 +1,35 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf8"/>
+<title>伝言板</title>
+<script>
+function submit() {
+  if (input.value != "") {
+    text1.innerText = input.value;
+    qr.src = `https://api.qrserver.com/v1/create-qr-code/?data=${ text1.innerText }&size=300x300`;
+    input.value = "";
+    alert("セットされました");
+  } else {
+    alert("内容を入力してください");
+  }
+}
+function cleartext() {
+  text1.innerText = "";
+  alert("クリアされました");
+}
+</script>
+</head>
+<body bgcolor="#90EE90">
+<h1 style="color: black">伝言板</h1>
+<div style="color: black;padding: 10px; margin-bottom: 10px; border: 5px double black;" id="textbox">
+<p id="text1" style="line-break: anywhere;">伝言はまだありません</p>
+</div>
+<textarea id="input" cols="50" rows="10"></textarea>
+<button onclick="submit();">セット</button>
+<button onclick="cleartext();">クリア</button></br>
+<img width="600" src="https://github.com/kaz-scripts/web2023/blob/master/idiotidiotidiotidiotidiotidiotidiotidiotidiot.jpg?raw=true"></img>
+<img id="qr"/>
+</body>
+</html>
