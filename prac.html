@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ES-Jam 〜Webプログラミング道場〜</title>
+</head>
+
+<body style="height:100vh;">
+    <div style="height:3em;">
+        <div style="float:right; ">
+            <button id=btnrun style="font-size:1.2em;">見てみる (^S)</button>
+            <button id=btnsave style="font-size:1.2em;">SAVEする<a id="elmSave"></a></button>
+            <button id=btnload style="font-size:1.2em;">LOADする<input id="elmLoad" type="file" hidden></button>
+            <!--
+                <button id=btnshare title="シェアする" style="font-size:1.2em;">📤</button>
+            -->
+        </div>
+        <h1 style="font-size:1.5em;">
+            ES-Jam <span style="font-size:66%;">〜Webプログラミング道場〜</span>
+        </h1>
+    </div>
+    <div style="height:calc(100vh - 7em);">
+        <div style="float:left; width:50%; height:100%;" id="elmEditor"></div>
+        <div style="float:right; width:50%; height:100%;">
+            <iframe id="elmPreview" style="width:100%; height:100%;" src="data:text/html;charset=utf-8;base64,5bem5YG0KOOCqOODh+OCo+OCvynjgatIVE1M44KS5pu444GE44Gm44CM6KaL44Gm44G/44KL44CN44Oc44K/44Oz44KS44CC"></iframe>
+        </div>
+    </div>
+    <div style="padding-top:15px; ">
+        <div style="float:right; ">
+            v20220821 by <a href="https://github.com/code4fukui/htmlprac" target="_blank">Code for FUKUI</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { monaco } from "https://code4fukui.github.io/monaco-editor/monaco.js";
+        import { fixMyHTML } from "https://code4fukui.github.io/fixMyHTML/fixMyHTML.js";
+
+        let g_editor;
+
+        async function エディタを作る() {
+            g_editor = monaco.editor.create(elmEditor, {
+                language: "html",
+                //autoIndent: true,
+                autoIndent: "none",
+                //formatOnPaste: true,
+                //formatOnType: true,
+                tabSize: 2,
+                minimap: { enabled: false },
+                //overflow: "auto",
+                automaticLayout: true,
+                theme: "vs-dark",
+            });
+
+            let prg = "";
+            const url = (new URL(document.location.href)).searchParams.get("url");
+            if (url) {
+                prg += await (await fetch(url)).text();
+                prg += "\n";
+            }
+            prg += decodeURIComponent(location.hash.substr(1)).replaceAll('scr.ES-Jam.ipt','script');
+            g_editor.setValue(prg);
+
+            elmEditor.addEventListener("keyup", (e) => {
+                if (e.ctrlKey && e.key == "s") {
+                    見てみる();
+                    // elmPreview.focus();
+                }
+            });
+        }
+
+        function 見てみる() {
+            const p1 = g_editor.getValue();
+            const p2 = fixMyHTML(p1);
+            if (p1 != p2) {
+                g_editor.setValue(p2);
+                //alert("全角文字を半角文字に置き換えました");
+            }
+            //g_editor.getAction("editor.action.formatDocument").run();
+            elmPreview.src = URL.createObjectURL(new Blob([g_editor.getValue()], { type: "text/html" }));
+        }
+
+        function SAVEする() {
+            elmSave.download = `WebDOJO.${Date.now()}.html`;
+            elmSave.href = URL.createObjectURL(new Blob([g_editor.getValue()], { type: "application/octet-stream" }));
+            elmSave.click();
+        }
+
+        function LOADする() {
+            const f = new FileReader();
+            f.onload = () => {
+                g_editor.setValue(f.result);
+            };
+            f.readAsText(elmLoad.files[0]);
+        }
+
+        function シェアする() {
+            const code = encodeURIComponent(g_editor.getValue().replaceAll('script','scr.ES-Jam.ipt')).replaceAll('(','%28').replaceAll(')','%29').replaceAll("'",'%27');
+            navigator.clipboard.writeText(`${location.origin}${location.pathname}#${code}`);
+            alert('シェア用URLをクリップボードにコピーしました');
+        }
+        // init
+        btnrun.onclick = () => 見てみる();
+        elmLoad.onchange = () => LOADする();
+        btnload.onclick = () => elmLoad.click();
+        btnsave.onclick = () => SAVEする();
+        //btnshare.onclick = () => シェアする();
+        エディタを作る();
+    </script>
+</body>
+
+</html>
