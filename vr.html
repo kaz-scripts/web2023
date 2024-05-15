@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+        <video id="wakka" preload="auto"
+               src="https://i-am-god-diep-io-and-minecraft-are-the-best-games-u-should-play.wakka.blog/wakka.mp4"
+               width="160" height="90" autoplay loop="true"
+                muted ></video>
+    <a-scene>
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#23C3D9"></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#BC2D5E"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="cyan"></a-cylinder>
+      <a-cylinder position="0 0.75 -3" radius="0.5" height="3" color="#FFC6FF"></a-cylinder>
+
+      <a-plane position="0 0 -4" rotation="0 0 0" width="4" height="2" color="#00C8A4"></a-plane>
+      <a-entity material="shader: flat; src: #wakka"
+                geometry="primitive: plane; width: 160; height: 90;"
+                position="100 0 -100"
+                rotation="0 0 0"
+                play-on-click
+                visible="true">
+      </a-entity>
+      <a-sky src="https://raw.githubusercontent.com/kaz-scripts/web2023/master/idiotidiotidiotidiotidiotidiotidiotidiotidiot.jpg" rotation="0 -130 0"></a-sky>
+
+    </a-scene>
+
+  </body>
+</html>
